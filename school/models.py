@@ -13,7 +13,7 @@ class Role(models.TextChoices):
     
 # Create your models here.
 class BaseModel(models.Model):
-    id: UUID = models.UUIDField(primary_key=True, default=uuid.uuid4())
+    id: UUID = models.UUIDField(primary_key=True)
     created_by: str = models.CharField(max_length=100, null=True, blank=True)
     modified_by: str = models.CharField(max_length=100, null=True, blank=True)
     created_at: datetime = models.DateTimeField(auto_now_add=True)
