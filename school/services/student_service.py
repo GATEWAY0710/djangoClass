@@ -36,7 +36,7 @@ class DefaultStudentService(StudentService):
         user = User()
         user.username = request.username
         user.email = request.email
-        user.password = request.password
+        user.set_password(request.password)
         
         student = Student()
         student.id = uuid.uuid4()
