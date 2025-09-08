@@ -44,6 +44,7 @@ class DefaultStudentService(StudentService):
         student.phone_number = request.phone_number
         student.name = request.name
         student.user = user
+        student.image_path = request.image_path
         student = self.repository.create(student) 
         return CreateStudentResponse(status=True, message="Student created successfully", email=student.user.email, name=student.name, username=student.user.username, phone_number=student.phone_number)  
     

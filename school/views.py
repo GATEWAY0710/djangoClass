@@ -4,7 +4,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 import uuid
 from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
 
+from rms import settings
 from school.services.application_models.student import CreateStudentRequest
 from school.service_provider import container
 from school.models import Student
@@ -14,7 +16,7 @@ def index(request):
     return render(request, "school/index.html", {"school_name": "Bole School", "is_successful" : False})
 
 @login_required
-def create(request):
+def create(request: HttpRequest):
     if request.method == "GET":
         return render(request, "school/create.html", {"school_name": "Bole School", "is_successful" : True})
     username = request.POST.get("username", "")
@@ -23,7 +25,13 @@ def create(request):
     name = request.POST.get("name", "")
     password = request.POST.get("password", "")
     confrim_password = request.POST.get("confirm_password", "")
-    response = container.student_service().create(CreateStudentRequest(email, name, password, confrim_password, username, phone_number))
+    image = request.FILES.get("image")
+    filename = None
+    if image:
+        fileStorage  = FileSystemStorage(location=settings.MEDIA_ROOT)
+        filename = fileStorage.save(image.name, image)
+    image_path = filename
+    response = container.student_service().create(CreateStudentRequest(email, name, password, confrim_password, username, phone_number, image_path))
     if response.status is False:
         return render(request, "school/create.html", {"school_name": "Bole School", "is_successful" : response.status, "message": response.message})
     return redirect("list")
@@ -35,7 +43,7 @@ def list(request):
 @login_required
 def view(request, student_id: uuid):
     student = container.student_repository().get(student_id)
-    return render(request, "school/view.html", {"student": student})
+    return render(request, "school/view.html", {"student": student, "MEDIA_URL": settings.MEDIA_URL})
 
 @login_required
 def delete(request, student_id: uuid):

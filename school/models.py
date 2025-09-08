@@ -27,3 +27,4 @@ class Student(BaseModel):
     matric_number: str = models.CharField(max_length=20, null=False, blank=False, unique=True)
     phone_number: str = models.CharField(max_length=15)
     user: User = models.OneToOneField(User, on_delete=models.CASCADE)
+    image_path: str = models.CharField(max_length=5000, null=True, blank=True)

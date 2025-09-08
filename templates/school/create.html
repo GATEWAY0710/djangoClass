@@ -6,7 +6,7 @@
             {{ message }}
         </div>
     {% endif %}
-    <form method="post">
+    <form method="post", enctype="multipart/form-data">
         {% csrf_token %}
         <div class="mb-3">
             <label for="name" class="form-label">Username</label>
@@ -31,6 +31,10 @@
         <div class="mb-3">
             <label for="name" class="form-label">Confirm Password</label>
             <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="file" class="form-control" id="image" name="image" required>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

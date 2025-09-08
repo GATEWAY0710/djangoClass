@@ -20,5 +20,6 @@
             <label for="name" class="form-label">Matric Number</label>
             <input type="text" class="form-control" id="matric_number" name="matric_number" value="{{ student.matric_number}}" readonly>
         </div>
+        <img src="{{MEDIA_URL}}/{{student.image_path}}">
 {% endblock %}
 

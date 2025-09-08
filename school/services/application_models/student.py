@@ -9,6 +9,7 @@ class CreateStudentRequest:
     confirm_password: str
     username: str
     phone_number: str
+    image_path: str
 
 @dataclass
 class CreateStudentResponse(BaseResponse):
